@@ -1,4 +1,4 @@
-DROP TABLE Estudiantes CASCADE CONSTRAINTS;
+&DROP TABLE Estudiantes CASCADE CONSTRAINTS;
 DROP TABLE Cursos CASCADE CONSTRAINTS;
 DROP TABLE Inscripciones CASCADE CONSTRAINTS;
 DROP TABLE Notas CASCADE CONSTRAINTS;
@@ -89,10 +89,10 @@ SELECT nombre FROM cursos WHERE curso_id IN(
     	SELECT estudiante_id FROM estudiantes WHERE edad>20)
 );
 
--- SELECT cursos.nombre FROM cursos 
--- JOIN inscripciones ON cursos.curso_id = incripciones.curso_id
--- JOIN estudiantes ON incripciones.estudiantes_id = estuantes.estudiante_id
--- WHERE estudiantes.edad>20;
+SELECT cursos.nombre FROM cursos 
+ JOIN inscripciones ON cursos.curso_id = incripciones.curso_id
+JOIN estudiantes ON incripciones.estudiantes_id = estuantes.estudiante_id
+WHERE estudiantes.edad>20;
 
 --Seleccionar el nombre, apellidos del alumno y nombre del curso, de aquellos alumnos que hayan sacado la máxima nota de entre todos los alumnos.
 
@@ -105,10 +105,10 @@ WHERE Estudiantes.estudiante_id IN (
 );
 
 
--- SELECT estudiantes.nombre, estudiantes.apellido, cursos.nombre, notas.nota FROM estudiantes
--- JOIN notas ON estudiantes.estudiante_id = notas.estudiante_id
--- JOIN cursos ON notas.curso_id = cursos.curso_id
--- WHERE notas.nota = (SELECT MAX(nota) FROM notas);
+ SELECT estudiantes.nombre, estudiantes.apellido, cursos.nombre, notas.nota FROM estudiantes
+ JOIN notas ON estudiantes.estudiante_id = notas.estudiante_id
+ JOIN cursos ON notas.curso_id = cursos.curso_id
+WHERE notas.nota = (SELECT MAX(nota) FROM notas);
 
 --Seleccionar el nombre del curso y su nota media, del curso con la nota media más alta.
 
@@ -122,15 +122,15 @@ WHERE Notas.curso_id = Cursos.curso_id
   )
 GROUP BY Cursos.nombre;
 
--- SELECT Cursos.nombre, AVG(Notas.nota) AS "Nota media más alta"
--- FROM Notas
--- JOIN Cursos ON Cursos.curso_id = Notas.curso_id
--- GROUP BY Cursos.nombre
--- HAVING AVG(Notas.nota) = (
---     SELECT MAX(AVG(nota))
---     FROM Notas
---     GROUP BY curso_id
--- );
+ SELECT Cursos.nombre, AVG(Notas.nota) AS "Nota media más alta"
+ FROM Notas
+JOIN Cursos ON Cursos.curso_id = Notas.curso_id
+ GROUP BY Cursos.nombre
+ HAVING AVG(Notas.nota) = (
+    SELECT MAX(AVG(nota))
+   FROM Notas
+     GROUP BY curso_id
+ );
 
 --Seleccionar el nombre de los cursos junto con el número de estudiantes inscritos en cada curso.
 
@@ -142,10 +142,10 @@ WHERE Cursos.curso_id IN (
 )
 GROUP BY Cursos.nombre;
 
--- SELECT Cursos.nombre AS "Curso", COUNT(*) AS "Total alumnos inscritos"
--- FROM Cursos
--- JOIN Inscripciones ON Inscripciones.curso_id = Cursos.curso_id
--- GROUP BY Cursos.nombre, Inscripciones.curso_id;
+ SELECT Cursos.nombre AS "Curso", COUNT(*) AS "Total alumnos inscritos"
+ FROM Cursos
+ JOIN Inscripciones ON Inscripciones.curso_id = Cursos.curso_id
+ GROUP BY Cursos.nombre, Inscripciones.curso_id;
 
 --Seleccionar el nombre y apellido de los estudiantes que tienen al menos una nota registrada, junto con el curso en el que tienen la nota.
 
@@ -158,8 +158,8 @@ WHERE Estudiantes.estudiante_id IN (
 GROUP BY Estudiantes.nombre, Estudiantes.apellido
 HAVING COUNT(*) >= 1;
 
--- SELECT Estudiantes.nombre, Estudiantes.apellido
--- FROM Estudiantes
--- JOIN Notas ON Notas.estudiante_id = Estudiantes.estudiante_id
--- GROUP BY Estudiantes.nombre, Estudiantes.apellido
--- HAVING COUNT(*) >= 1;
+ SELECT Estudiantes.nombre, Estudiantes.apellido
+FROM Estudiantes
+ JOIN Notas ON Notas.estudiante_id = Estudiantes.estudiante_id
+ GROUP BY Estudiantes.nombre, Estudiantes.apellido
+ HAVING COUNT(*) >= 1;
